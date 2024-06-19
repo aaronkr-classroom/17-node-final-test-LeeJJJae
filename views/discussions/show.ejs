@@ -1,27 +1,33 @@
-<!-- views/discussions/show.ejs -->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discussion</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
 <main class="discussion">
   <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="pt-5">
-      <a href="/discussions" class="btn btn-outline-secondary"
-        >← Back to Discussions</a
-      >
+      <a href="/discussions" class="btn btn-outline-secondary">← Back to Discussions</a>
 
       <article class="card discussion py-3 px-3 mt-3">
         <div class="row">
           <div class="col col-lg-1">
             <figure class="user-img">
-              <img src="<%= discussion.author.profileImg ||
-              "https://via.placeholder.com/150" %>" alt="Placeholder image"
-              class="rounded-circle" />
+              <img src="https://via.placeholder.com/150" alt="Placeholder image" class="rounded-circle" />
             </figure>
           </div>
           <div class="col col-lg-11">
             <header>
-              <small
-                >Posted by
+              <small>
+                Posted by
+                <% if (discussion.author) { %>
                 <a href="<%= `/users/${discussion.author._id}` %>">
                   <strong><%= discussion.author.fullName %></strong>
                 </a>
+                <% } else { %>
+                <strong>Unknown</strong>
+                <% } %>
                 on
                 <time datetime="<%= discussion.createdAt.toISOString() %>">
                   <%= discussion.createdAt.toLocaleDateString() %>
@@ -30,11 +36,8 @@
               <% if (loggedIn) { %>
               <small class="text-end">
                 <a href="/discussions/<%= discussion._id %>/edit">✏️ Edit</a>
-                <a
-                  href="/discussions/<%= discussion._id %>/delete?_method=DELETE"
-                  onclick="return confirm('Are you sure you want to delete this record?')"
-                  >🗑️ Delete</a
-                >
+                <a href="/discussions/<%= discussion._id %>/delete?_method=DELETE"
+                   onclick="return confirm('Are you sure you want to delete this record?')">🗑️ Delete</a>
               </small>
               <% } %>
             </header>
@@ -52,18 +55,20 @@
             <div class="row">
               <div class="col col-lg-1">
                 <figure class="user-img">
-                  <img src="<%= comment.author.profileImg ||
-                  "https://via.placeholder.com/150" %>" alt="Placeholder image"
-                  class="rounded-circle" />
+                  <img src="https://via.placeholder.com/150" alt="Placeholder image" class="rounded-circle" />
                 </figure>
               </div>
               <div class="col col-lg-11">
                 <header>
-                  <small
-                    >Posted by
+                  <small>
+                    Posted by
+                    <% if (comment.author) { %>
                     <a href="<%= `/users/${comment.author._id}` %>">
                       <strong><%= comment.author.fullName %></strong>
                     </a>
+                    <% } else { %>
+                    <strong>Unknown</strong>
+                    <% } %>
                     on
                     <time datetime="<%= comment.createdAt.toISOString() %>">
                       <%= comment.createdAt.toLocaleDateString() %>
@@ -72,11 +77,8 @@
                   <% if (loggedIn) { %>
                   <small class="text-end">
                     <!-- <a href="/comments/<%= // comment._id %>/edit">✏️ Edit</a> -->
-                    <a
-                      href="/comments/<%= comment._id %>/delete?_method=DELETE"
-                      onclick="return confirm('Are you sure you want to delete this record?')"
-                      >🗑️ Delete</a
-                    >
+                    <a href="/comments/<%= comment._id %>/delete?_method=DELETE"
+                       onclick="return confirm('Are you sure you want to delete this record?')">🗑️ Delete</a>
                   </small>
                   <% } %>
                 </header>
@@ -107,3 +109,4 @@
     </div>
   </div>
 </main>
+</body>
